@@ -1,15 +1,18 @@
-version: '3'
-
+version: '3.6'
 services:
-  nuxtjs:
-    # Dockerfileの場所
-    build: .
-    tty: true
-    # コンテナ起動時のコマンド
-    command: npm run dev
-    # ホストOSとコンテナ内でソースコードを共有
-    volumes:
-      - .:/app
-    # コンテナ内部の3000を外部から8080でアクセス
+  dev:
+    container_name: dev
+    image: centos:centos7
+    build: ./dev
+    privileged: true
+    working_dir: /app
     ports:
-      - "8080:3000"
+      - "3000:3000"
+      - "8888:80"
+    volumes:
+      # - dev-data:/app
+      - .:/app
+
+# volumes:
+#   dev-data:
+#     driver: local
